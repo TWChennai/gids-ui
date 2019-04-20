@@ -3,16 +3,17 @@ import {QaModel} from "./qa/QaModel";
 import {ListGroup} from "react-bootstrap";
 import {Button} from "react-bootstrap";
 import _ from "lodash";
-import QS from "./Questionaire";
+import QS from "./data/Questionaire";
 import Page from '../common/Page';
 
+const totalQuestions = 5;
 class Qa extends Component {
     constructor(props, context) {
         super(props, context);
         let qas = [];
         let shuffledQuestions = _.shuffle(QS.questions);
 
-        _.each(shuffledQuestions.slice(1, 10), (question) => {
+        _.each(shuffledQuestions.slice(1, totalQuestions), (question) => {
             qas.push(new QaModel(question.id, question.question, question.options, question.answer))
         });
 
@@ -86,7 +87,7 @@ class Qa extends Component {
                 </div>
                 }
                 {this.state.isOver &&
-                <h1> Game over! {this.state.correctAnswers} + {this.state.questions.length}</h1>
+                <h1>You answered {this.state.correctAnswers} right out of {totalQuestions}</h1>
                 }
             </Page>
 
