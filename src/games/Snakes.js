@@ -224,7 +224,7 @@ class Snakes extends Component {
     if(this.state.snake.length <= 0 || this.didGameEnd(this.state.snake) || (this.state.questions.length === 0)) {
       setTimeout(() => {
         this.props.onComplete("failed");
-      }, 300000);
+      }, 3000);
       this.setState({"gameOver": true});
       return
     }
