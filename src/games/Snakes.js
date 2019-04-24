@@ -41,6 +41,7 @@ class Snakes extends Component {
         {x: 120, y: 150},
         {x: 110, y: 150}
       ],
+      dx: 10,dy: 0,
       questions: [
         {
           "title": "What is the full form of CPU?",
