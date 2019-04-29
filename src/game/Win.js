@@ -13,10 +13,10 @@ export default class Win extends React.Component {
 
   render() {
     return (
-        <Page>
-          <img src={image} alt='win'/>
-          <p className='status-text'>You Win, Server is now secured</p>
-        </Page>
+      <Page>
+        <img src={image} alt='win' />
+        <p className='status-text'>You Win, Server is now secured</p>
+      </Page>
     );
   };
 }

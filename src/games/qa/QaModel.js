@@ -1,6 +1,6 @@
 export class QaModel {
 
-    constructor(id="", question = "", options=[], answer="") {
+    constructor(id = "", question = "", options = [], answer = "") {
         this._id = id;
         this._question = question;
         this._options = options;

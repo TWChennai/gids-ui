@@ -4,7 +4,7 @@ import red from '../asserts/img/red.png';
 import './game.css'
 
 class Snakes extends Component {
-  constructor(){
+  constructor() {
     super();
     this.drawSnakePart = this.drawSnakePart.bind(this);
     this.drawSnake = this.drawSnake.bind(this);
@@ -26,7 +26,7 @@ class Snakes extends Component {
       score: 0,
       colors: {
         optionA: ["red", "darkred"],
-        optionB: ["blue","darkblue"]
+        optionB: ["blue", "darkblue"]
       },
       gameStarted: false,
       question: {
@@ -35,11 +35,11 @@ class Snakes extends Component {
         "optionB": ""
       },
       snake: [
-        {x: 150, y: 150},
-        {x: 140, y: 150},
-        {x: 130, y: 150},
-        {x: 120, y: 150},
-        {x: 110, y: 150}
+        { x: 150, y: 150 },
+        { x: 140, y: 150 },
+        { x: 130, y: 150 },
+        { x: 120, y: 150 },
+        { x: 110, y: 150 }
       ],
       dx: 10,dy: 0,
       questions: [
@@ -105,10 +105,10 @@ class Snakes extends Component {
         },
       ]
     }
-    
+
   }
   randomTen(min, max) {
-    return Math.round((Math.random() * (max-min) + min) / 10) * 10;
+    return Math.round((Math.random() * (max - min) + min) / 10) * 10;
   }
 
   createOption(snake) {
@@ -119,9 +119,9 @@ class Snakes extends Component {
       if (optionOnSnake)
         this.createOption();
     });
-    return {x, y}
+    return { x, y }
   }
-  
+
   drawOption(x, y, option) {
     const ctx = this.gameCanvas.getContext("2d");
     ctx.fillStyle = this.state.colors[option][0]
@@ -135,43 +135,43 @@ class Snakes extends Component {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
-  getQuestion(){
+  getQuestion() {
     const questions = this.state.questions;
     const index = this.getRandomInt(0, (questions.length - 1));
     const question = questions[index];
-    questions.splice(index,1)
-    this.setState({questions})
-    return question; 
+    questions.splice(index, 1)
+    this.setState({ questions })
+    return question;
   }
-  componentDidMount(){
+  componentDidMount() {
     const CANVAS_BORDER_COLOUR = 'black';
     const CANVAS_BACKGROUND_COLOUR = "white";
 
-      this.gameCanvas = this.refs.canvas
-      this.gameCanvas.focus();
-      var ctx = this.gameCanvas.getContext("2d");
-      ctx.fillStyle = CANVAS_BACKGROUND_COLOUR;
-      ctx.strokestyle = CANVAS_BORDER_COLOUR;
-      ctx.fillRect(0, 0, this.gameCanvas.width, this.gameCanvas.height);
-      ctx.strokeRect(0, 0, this.gameCanvas.width, this.gameCanvas.height);
+    this.gameCanvas = this.refs.canvas
+    this.gameCanvas.focus();
+    var ctx = this.gameCanvas.getContext("2d");
+    ctx.fillStyle = CANVAS_BACKGROUND_COLOUR;
+    ctx.strokestyle = CANVAS_BORDER_COLOUR;
+    ctx.fillRect(0, 0, this.gameCanvas.width, this.gameCanvas.height);
+    ctx.strokeRect(0, 0, this.gameCanvas.width, this.gameCanvas.height);
 
-      let snake = [
-        {x: 150, y: 150},
-        {x: 140, y: 150},
-        {x: 130, y: 150},
-        {x: 120, y: 150},
-        {x: 110, y: 150}
-      ];
-      this.setState({snake, dx: 10,dy: 0})
-      const optionA = this.createOption(snake);
-      const optionB = this.createOption(snake);
-      const question = this.getQuestion();
-      this.setState({optionA, optionB, question});
-      
-      this.drawOption(optionA.x, optionA.y, "optionA");
-      this.drawOption(optionB.x, optionB.y, "optionB");
-      this.drawSnake(snake);
-      
+    let snake = [
+      { x: 150, y: 150 },
+      { x: 140, y: 150 },
+      { x: 130, y: 150 },
+      { x: 120, y: 150 },
+      { x: 110, y: 150 }
+    ];
+    this.setState({ snake, dx: 10, dy: 0 })
+    const optionA = this.createOption(snake);
+    const optionB = this.createOption(snake);
+    const question = this.getQuestion();
+    this.setState({ optionA, optionB, question });
+
+    this.drawOption(optionA.x, optionA.y, "optionA");
+    this.drawOption(optionB.x, optionB.y, "optionB");
+    this.drawSnake(snake);
+
   }
   clearCanvas() {
     var ctx = this.gameCanvas.getContext("2d");
@@ -183,12 +183,12 @@ class Snakes extends Component {
   drawSnake(snake) {
     snake.forEach(this.drawSnakePart);
   }
-  optionEaten(snake){
-    const {x:x1,y:y1} = this.state.optionA;
-    const {x:x2,y:y2} = this.state.optionB;
-    if(snake[0].x === x1 && snake[0].y === y1) {
+  optionEaten(snake) {
+    const { x: x1, y: y1 } = this.state.optionA;
+    const { x: x2, y: y2 } = this.state.optionB;
+    if (snake[0].x === x1 && snake[0].y === y1) {
       return "optionA"
-    } else if(snake[0].x === x2 && snake[0].y === y2){
+    } else if (snake[0].x === x2 && snake[0].y === y2) {
       return "optionB"
     }
     return null
@@ -221,15 +221,15 @@ class Snakes extends Component {
     this.setState({snake})
   }
   advanceSnake() {
-    if(this.state.snake.length <= 0 || this.didGameEnd(this.state.snake) || (this.state.questions.length === 0)) {
+    if (this.state.snake.length <= 0 || this.didGameEnd(this.state.snake) || (this.state.questions.length === 0)) {
       setTimeout(() => {
         this.props.onComplete("failed");
       }, 3000);
       this.setState({"gameOver": true});
       return
     }
-    if(this.state.score >= 3) {
-      this.setState({"gameWon": true});
+    if (this.state.score >= 3) {
+      this.setState({ "gameWon": true });
       setTimeout(() => {
         this.props.onComplete("completed");
       }, 3000);
@@ -237,55 +237,55 @@ class Snakes extends Component {
     }
     this.circleAround(this.state.snake);
     setTimeout(() => {
-      const {dx, dy} = this.state;
+      const { dx, dy } = this.state;
       this.clearCanvas();
       const snake = this.state.snake;
-      const head = {x: snake[0].x + dx, y: snake[0].y + dy};
+      const head = { x: snake[0].x + dx, y: snake[0].y + dy };
       snake.unshift(head);
       const eatenOption = this.optionEaten(snake);
       const rightOption = this.state.question.answer;
 
-      switch(eatenOption){
+      switch (eatenOption) {
         case "optionA": {
-          if(rightOption !== "optionA") {
+          if (rightOption !== "optionA") {
             snake.pop();
-            snake.pop();  
+            snake.pop();
           } else {
             const score = this.state.score + 1;
-            this.setState({score});
+            this.setState({ score });
           }
           const optionA = this.createOption(snake);
           const optionB = this.createOption(snake);
           const question = this.getQuestion();
-          this.setState({optionA, optionB, question});
+          this.setState({ optionA, optionB, question });
           break;
         }
         case "optionB": {
-          if(rightOption !== "optionB") {
+          if (rightOption !== "optionB") {
             snake.pop();
-            snake.pop();  
-          }else {
+            snake.pop();
+          } else {
             const score = this.state.score + 1;
-            this.setState({score});
+            this.setState({ score });
           }
           const optionA = this.createOption(snake);
           const optionB = this.createOption(snake);
           const question = this.getQuestion();
-          this.setState({optionA, optionB, question});
+          this.setState({ optionA, optionB, question });
           break;
         }
-        default:{
-          snake.pop();  
+        default: {
+          snake.pop();
           break;
-        } 
+        }
       }
-      
+
 
       this.drawOption(this.state.optionA.x, this.state.optionA.y, "optionA");
       this.drawOption(this.state.optionB.x, this.state.optionB.y, "optionB");
       this.drawSnake(snake);
-      this.setState({snake});
-      this.advanceSnake();  
+      this.setState({ snake });
+      this.advanceSnake();
     }, 100);
   }
   drawSnakePart(snakePart) {
@@ -307,9 +307,9 @@ class Snakes extends Component {
     const goingRight = dx === 10;
     const goingLeft = dx === -10;
     const SPACE = 32;
-    if(keyPressed === SPACE) {
+    if (keyPressed === SPACE) {
       this.advanceSnake();
-      this.setState({gameStarted: true});
+      this.setState({ gameStarted: true });
       return;
     }
     if (keyPressed === LEFT_KEY && !goingRight) {
@@ -328,24 +328,24 @@ class Snakes extends Component {
       dx = 0;
       dy = 10;
     }
-    this.setState({dx, dy})
+    this.setState({ dx, dy })
   }
   render() {
     return (
       <div className="App" >
         <header className="App-header">
-        {this.state.gameStarted ? null : <p className='snakeStart'> PRESS SPACE BAR TO START THE GAME </p> }
-        <p className='snakeScore'>
-          Your score: {this.state.score}
-        </p>
-        <div className="snakequestion">
-          <p>{this.state.question.title}</p>
-          <p><img src={red} height="16" width="16" alt="red img"/> - {this.state.question.optionA}</p>
-          <p><img src={blue} height="16" width="16" alt="blue img"/> - {this.state.question.optionB}</p>
-        </div> <br/><br/>
-        <canvas ref="canvas" id="gameCanvas" width="700" height="500" onKeyDown={(event) => {this.changeDirection(event)}} tabIndex="0"></canvas>
-        {this.state.gameOver ? <p className='gameOver'>Game Over</p>: null}
-        {this.state.gameWon ? <p className='youWon'>You've Won</p>: null}
+          {this.state.gameStarted ? null : <p className='snakeStart'> PRESS SPACE BAR TO START THE GAME </p>}
+          <p className='snakeScore'>
+            Your score: {this.state.score}
+          </p>
+          <div className="snakequestion">
+            <p>{this.state.question.title}</p>
+            <p><img src={red} height="16" width="16" alt="red img" /> - {this.state.question.optionA}</p>
+            <p><img src={blue} height="16" width="16" alt="blue img" /> - {this.state.question.optionB}</p>
+          </div> <br /><br />
+          <canvas ref="canvas" id="gameCanvas" width="700" height="500" onKeyDown={(event) => { this.changeDirection(event) }} tabIndex="0"></canvas>
+          {this.state.gameOver ? <p className='gameOver'>Game Over</p> : null}
+          {this.state.gameWon ? <p className='youWon'>You've Won</p> : null}
         </header>
       </div>
     );

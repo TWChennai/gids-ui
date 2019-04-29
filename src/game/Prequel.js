@@ -37,16 +37,16 @@ export default class Prequel extends React.Component {
       case "ready":
         return (
             <Page>
-              <div className="gooey" onClick={this.kickoff}>
-                <a className="link">Start</a>
-              </div>
+              <a className="gooey" onClick={this.kickoff}>
+                <span className="link">Start</span>
+              </a>
             </Page>
         );
       case "start":
         return (
             <Page>
-              <div className="gooey">
-                <a>{countDown}</a>
+              <div className="gooey no-pointer">
+                <span className="link">{countDown}</span>
               </div>
             </Page>
         );
@@ -71,7 +71,9 @@ export default class Prequel extends React.Component {
                   </Col>
                 </Row>
               </Container>
-
+              <a className="gooey" onClick={this.start}>
+                <span className="link" >Save the Server</span>
+              </a>
             </Page>
         );
       default:

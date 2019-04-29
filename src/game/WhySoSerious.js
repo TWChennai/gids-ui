@@ -50,7 +50,7 @@ class WhySoSerious extends Component {
     startProcess() {
         setTimeout(() => {
             this.analyse();
-        }, 1000); 
+        }, 1000);
     }
 
     getSuccess() {

@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {Form} from "react-bootstrap";
+import React, { Component } from 'react';
+import { Form } from "react-bootstrap";
 
 class Option extends Component {
     render() {

@@ -13,10 +13,10 @@ export default class Lost extends React.Component {
 
   render() {
     return (
-        <Page>
-          <img src={image} alt='lost'/>
-          <p className='status-text lost'>You Lose, Server is still vulnerable to attack</p>
-        </Page>
+      <Page>
+        <img src={image} alt='lost' />
+        <p className='status-text lost'>You Lose, Server is still vulnerable to attack</p>
+      </Page>
     );
   };
 }

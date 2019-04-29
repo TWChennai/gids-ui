@@ -1,4 +1,4 @@
-import {currentSettings} from "./storage";
+import { currentSettings } from "./storage";
 import _ from 'lodash';
 import EventEmitter from "events";
 
@@ -6,7 +6,7 @@ const connections = {};
 let clientSocket;
 
 const wsURL = (path) => {
-  const {protocol, host} = window.location;
+  const { protocol, host } = window.location;
   return `${((protocol === "https:") ? "wss://" : "ws://")}${host}${path}`;
 };
 
@@ -14,14 +14,14 @@ const noop = () => {
 };
 
 const configuredGames = () => {
-  const {games} = currentSettings();
+  const { games } = currentSettings();
   return _.chain(games)
-      .map(({Name: name, Selected: selected}) => ({name, selected}))
-      .filter('selected')
-      .value();
+    .map(({ Name: name, Selected: selected }) => ({ name, selected }))
+    .filter('selected')
+    .value();
 };
 
-const refreshSocket = (socket, {url, onConnected = noop, onMessage = noop}) => {
+const refreshSocket = (socket, { url, onConnected = noop, onMessage = noop }) => {
   if (!socket || !socket.OPEN) {
     const newSocket = new WebSocket(url);
     newSocket.onopen = onConnected;
@@ -32,14 +32,14 @@ const refreshSocket = (socket, {url, onConnected = noop, onMessage = noop}) => {
 };
 
 const clientURL = () => {
-  const {nickname} = currentSettings();
+  const { nickname } = currentSettings();
   return wsURL(`/ws/v1/clients/${nickname}`);
 };
 
 const onClientConnected = () => {
   const gameURL = (gameName) => `${clientURL()}/games/${gameName}`;
   const games = configuredGames();
-  _.each(games, ({name}) => {
+  _.each(games, ({ name }) => {
     const gameSocket = _.get(connections, name);
     connections[name] = refreshSocket(gameSocket, {
       url: gameURL(name),
@@ -48,13 +48,13 @@ const onClientConnected = () => {
   });
 };
 
-const onClientMessage = ({data}) => {
-  const {Action: action, Payload: payload} = JSON.parse(data);
+const onClientMessage = ({ data }) => {
+  const { Action: action, Payload: payload } = JSON.parse(data);
   clientEvent.emit(action, payload);
 };
 
-const onGameMessage = ({data}) => {
-  const {Action: action, Payload: payload} = JSON.parse(data);
+const onGameMessage = ({ data }) => {
+  const { Action: action, Payload: payload } = JSON.parse(data);
   gameEvent.emit(action, payload);
 };
 

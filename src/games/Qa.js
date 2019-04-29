@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {QaModel} from "./qa/QaModel";
+import React, { Component } from 'react';
+import { QaModel } from "./qa/QaModel";
 import _ from "lodash";
 import './Qa.css'
 
@@ -46,7 +46,7 @@ class Qa extends Component {
     });
 
     if (_.isEmpty(questions)) {
-      const {onComplete = _.noop} = this.props;
+      const { onComplete = _.noop } = this.props;
       if (isOver) {
         const status = this.state.correctAnswers >= 2 ? 'completed' : 'failed';
         clearTimeout(completedTimer);
@@ -58,7 +58,7 @@ class Qa extends Component {
   };
 
   handleOptionChange = (event) => {
-    this.setState({selectedOption: event.target.value})
+    this.setState({ selectedOption: event.target.value })
   };
 
   removeQuestion = (questionID) => {
@@ -72,8 +72,8 @@ class Qa extends Component {
 
   render() {
     return (
-        <div className='quizWrapper'>
-          {!this.state.isOver &&
+      <div className='quizWrapper'>
+        {!this.state.isOver &&
           <React.Fragment>
             <form>
               <p className='question'>
@@ -82,14 +82,14 @@ class Qa extends Component {
               {this.state.currentQuestion.options.map((option, index) => {
                 return <div className="form-check" key={index}>
                   <input
-                      id={option}
-                      type="radio"
-                      name="react-tips"
-                      value={option}
-                      className="form-check-input"
-                      onChange={this.handleOptionChange}
-                      checked={option === this.state.selectedOption}
-                      key={index}
+                    id={option}
+                    type="radio"
+                    name="react-tips"
+                    value={option}
+                    className="form-check-input"
+                    onChange={this.handleOptionChange}
+                    checked={option === this.state.selectedOption}
+                    key={index}
                   />
                   <label htmlFor={option}>{option}</label>
                 </div>
@@ -97,11 +97,11 @@ class Qa extends Component {
             </form>
             <button onClick={this.handleSubmit}>Submit</button>
           </React.Fragment>
-          }
-          {this.state.isOver &&
+        }
+        {this.state.isOver &&
           <h1>you answered {this.state.correctAnswers}/{this.state.count} right</h1>
-          }
-        </div>
+        }
+      </div>
 
     );
   }
