@@ -82,8 +82,6 @@ export default class Home extends React.Component {
         publishGameMessage(name, { action });
         return;
       default:
-        return;
-      default:
         publishGameMessage(name, {action});
         return;
     }
